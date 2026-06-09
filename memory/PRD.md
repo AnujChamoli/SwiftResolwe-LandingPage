@@ -46,9 +46,26 @@ Production-quality, fully responsive **frontend-only marketing landing page** fo
 - **Retail Pipeline** steps reveal sequentially (≈200ms stagger, full reveal ≤2s).
 - **Footer** Column 1 compliance badges removed.
 
+## Iteration 3 (2026-12-09)
+- **Cinematic section reveals**: each major section wrapped in `<SectionReveal>` (opacity 0→1 + translateY 48→0 + scale .985→1 + blur 8px→0, 0.75s, ease [0.16,1,0.3,1]).
+- **ScanDivider** replaces TideDivider — a thin cyan-to-transparent sweep between sections.
+- **Lenis** tuned: duration 1.2, lerp 0.08 (silkier inertia).
+- **Animated CTA clusters** (CTACluster + CTAItem): micro-copy → primary → secondary stagger; primary buttons get a one-time arrival pulse (`.cta-primary-arrive` + `@keyframes pulse-glow`).
+- **Primary button hover**: animated white sheen sweep via `::before` translateX(-120% → 120%) in 0.75s.
+- **Outline button hover**: cleaner background-position trick (200%-wide gradient slides 100%→0%) plus color → white. Text remains fully legible (no stacking-context occlusion).
+- **Typewriter** upgraded to 1.6s reveal with a glowing cyan scan caret + soft sweep that ride the reveal edge via CSS `::before`/`::after` with `--tw-edge` custom property; 350ms inter-box stagger in Tiers/Panel/Dual-Track/Verticals; Retail keeps 300ms sequential.
+- **Color reset**: orange `#EA580C` swapped to cool slate `--neg #64748B` in the Economic Advantage timeline only. Vivid cyan vs muted slate now drives the visual contrast.
+- **Hero**: secondary CTA → "Schedule a 30 Minute Dispute Evaluation". TRIAGE ENGINE hub enlarged (r=42→58, inner r=22→38, label fontSize 9→11) so the label fits cleanly inside.
+- **Manifesto** headline → "AI as Scaffolding, Not the Judge."
+- **Economic Advantage** headline → "The Numbers Work in Your Favor."
+- **Calculator math**: replaced with a deterministic `estimate()` model — regressive `tradRate` by claim bracket (30%/25%/18%/12%/8%), claim-floored at ₹1.5L, ODR = 12% of traditional cost, claim-bracketed `courtDays` (900/1100/1500/2400/3300). Sub-labels render `~88% versus traditional litigation` and `~{courtDays}+ days in court to 45 days here`. Prominent disclaimer card kept beneath the result widgets.
+- **Footer** Column 1 brand brief rewritten to plain-language.
+
 ## Testing
-- Iteration 1 — `/app/test_reports/iteration_1.json` — 100% functional pass on the dark build.
-- Iteration 2 — `/app/test_reports/iteration_2.json` — 100% pass across ~70 assertions on the light-theme migration: tokens, fonts, hyphen purge, copy rewrites, typewriter reveal, sequential retail stagger, Lenis smooth-scroll landing, brand glyph, footer pruning, all 9 statute strings verbatim.
+- Iteration 1 — dark build — 100% pass.
+- Iteration 2 — light-theme migration + hyphen purge — 100% pass.
+- Iteration 3 — `/app/test_reports/iteration_3.json` — 95% pass (one MEDIUM gap: CSS rules for button hover sheen / outline wipe / arrival pulse were missing despite the classes being applied).
+- Iteration 4 — `/app/test_reports/iteration_4.json` — **100% pass** after appending the missing CSS rules. Outline wipe converted from `::before` fill to a background-position-on-200%-gradient approach so the text node never gets occluded. Computed-style snapshots at hover start/mid/end verified the sheen translation, the cyan wipe with white label legibility, and the one-shot pulse-glow on three primary CTAs.
 
 ## Backlog (P0/P1/P2)
 - **P1 — Conversion polish:** add a small "value-prop" sticky CTA bar after the user passes 60% of the page (better File-a-Dispute conversion); add an inline "industry selector" pill above the Enterprise Verticals matrix.
