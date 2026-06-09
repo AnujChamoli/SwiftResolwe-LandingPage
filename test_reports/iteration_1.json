@@ -1,0 +1,37 @@
+{
+  "summary": "Comprehensive frontend testing of SwiftResolwe landing page completed via Playwright on the preview URL. 56 distinct UI/interaction/content assertions executed. All MUST-HAVE flows (landing render, all 10 sections + 2 callouts + header + footer, sticky header CTA on scroll>80, smooth-scroll nav, mobile hamburger menu at 414px, hero CTAs to /file-a-dispute and /triage, hero triage SVG diagram, trust metrics 45/90/100 count-up, ticker, 8 placeholder logos, 3 resolution tier cards with verbatim statute citations, 3 panel-of-neutrals categories with Section 12 disclosure, 4-column enterprise verticals with Section 138 NI Act + Section 25 PSS Act, 3-step retail pipeline at #retail, economic-advantage 22x timeline ratio (measured 21.56x), claim slider updates cost-saved+claim-display, FAQ single-open accordion with aria-expanded, footer 4 columns + compliance badges + © 2026 copyright, all three placeholder routes /file-a-dispute /login /triage rendering with shared header/footer and Back-to-Landing link) PASS. All 9 statute strings present VERBATIM. Initial test reported 8 false negatives — all confirmed as test-script artifacts (CSS text-transform:uppercase makes inner_text uppercase; React controlled <input range> required Object.getOwnPropertyDescriptor setter; first nav-link scrolled correctly but check timed at 900ms — at 2500ms it lands at top:-0.07). No real functional or content bugs found.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {
+        "screen": "Hero (1920px desktop)",
+        "issues": [
+          "Triage diagram (data-testid='hero-diagram') output-tier badge cards on the right edge (TIER 01 Negotiate / TIER 02 Mediate / TIER 03 Arbitrate) are visually clipped by the diagram container — labels render as 'Negotia', 'Mediat', 'Arbitrat' because the right edge of each card extends past the SVG/card bounding box. Either widen the container, shrink the label font, or shift the output nodes inward (~24px) so the full word is visible."
+        ]
+      }
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [
+    "(Polish, non-blocking) Fix Triage diagram label clipping on the right edge so 'Negotiate', 'Mediate', 'Arbitrate' render fully inside the hero diagram card.",
+    "(Optional) Footer compliance badges and the 'Coming Soon · Form Placeholder' label render uppercase via CSS text-transform — visually correct but if any downstream test checks the raw cased string via inner_text it will see uppercase. Just an awareness note for future automation."
+  ],
+  "critical_code_review_comments": [
+    "Landing.jsx renders ScrollProgress + Header + 10 sections + Footer cleanly with stable id anchors (#retail, #enterprise, #tiers, #panel, #economics, #faq) matching the header nav links.",
+    "Header.jsx: smooth-scroll uses scrollIntoView({behavior:'smooth'}) — works; AnimatePresence reveal of header-file-dispute at scrollY>80 is correctly gated.",
+    "EconomicAdvantage.jsx: timeline true-22x scale implemented as widthPct={97} (court) vs {4.5} (odr) → measured DOM ratio 21.56× ≈ exact intent. Solid.",
+    "ResolutionTiers.jsx, EnterpriseVerticals.jsx, PanelOfNeutrals.jsx, FAQTerminal.jsx: every legally-sensitive statute string ('Section 10A of the Information Technology Act, 2000', 'Section 85/63 of the Bharatiya Sakshya Adhiniyam, 2023', 'Section 27 of the Mediation Act, 2023', 'Section 36/12 of the Arbitration and Conciliation Act, 1996', 'Section 31A of the Arbitration Act', 'Section 138 (NI Act)', 'Section 25 (PSS Act)') is hardcoded verbatim and verified in DOM.",
+    "FAQTerminal.jsx: single-open accordion logic (openIdx state with -1 sentinel) is correct; aria-expanded toggles properly.",
+    "Hero.jsx triage diagram: minor visual polish needed — three right-side output badges overflow the diagram container at lg breakpoint."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "N/A (skipped per request)", "frontend": "100% functional, 1 minor visual polish item" },
+  "test_credentials": "N/A — frontend-only, no auth.",
+  "seed_data_creation": "None.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Frontend-only marketing site. All flows verified PASS. The ONLY observable issue is cosmetic clipping of the three right-side tier labels inside the hero TriageDiagram at >=lg viewports. When writing future Playwright tests against this site: (a) for the claim-slider use Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set + dispatch 'input' event, a plain el.value=... will not propagate to React state; (b) body.inner_text() reflects CSS uppercase — assert case-insensitively for footer badges and the 'Coming Soon · Form Placeholder' label; (c) allow >=2s wait after clicking a smooth-scroll nav link before measuring getBoundingClientRect. data-testid coverage is excellent across header, hero, all 10 sections, FAQ rows, calculator, timeline, footer, and placeholder routes.",
+  "rca of the issue": "No production bugs found. The only follow-up is the cosmetic Triage diagram label clipping on desktop. Likely cause: the output-tier badges are absolutely-positioned with x-offsets close to the SVG/container right edge; either reduce padding on each badge, reduce font-size from text-sm to text-xs, or shift x-coordinate of the three output nodes left by ~24-32px so labels stay inside the card."
+}

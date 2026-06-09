@@ -1,0 +1,37 @@
+import { Header } from "@/components/landing/Header";
+import { Footer } from "@/components/landing/Footer";
+import { Hero } from "@/components/landing/Hero";
+import { TrustAnchor } from "@/components/landing/TrustAnchor";
+import { Manifesto } from "@/components/landing/Manifesto";
+import { ResolutionTiers } from "@/components/landing/ResolutionTiers";
+import { PanelOfNeutrals } from "@/components/landing/PanelOfNeutrals";
+import { DualTrackGateway } from "@/components/landing/DualTrackGateway";
+import { EnterpriseVerticals } from "@/components/landing/EnterpriseVerticals";
+import { RetailPipeline } from "@/components/landing/RetailPipeline";
+import { EconomicAdvantage } from "@/components/landing/EconomicAdvantage";
+import { Jurisdiction } from "@/components/landing/Jurisdiction";
+import { FAQTerminal } from "@/components/landing/FAQTerminal";
+import { ScrollProgress } from "@/components/landing/ScrollProgress";
+
+export default function Landing() {
+  return (
+    <div data-testid="landing-page" className="relative min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
+      <ScrollProgress />
+      <Header />
+      <main>
+        <Hero />
+        <TrustAnchor />
+        <Manifesto />
+        <ResolutionTiers />
+        <PanelOfNeutrals />
+        <DualTrackGateway />
+        <EnterpriseVerticals />
+        <RetailPipeline />
+        <EconomicAdvantage />
+        <Jurisdiction />
+        <FAQTerminal />
+      </main>
+      <Footer />
+    </div>
+  );
+}
