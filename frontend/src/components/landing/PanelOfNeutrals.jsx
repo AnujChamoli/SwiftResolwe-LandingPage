@@ -74,7 +74,8 @@ export const PanelOfNeutrals = () => {
                   as="p"
                   testId={`neutral-body-${c.no}`}
                   text={c.copy}
-                  delay={150 + i * 80}
+                  duration={1600}
+                  delay={350 * i}
                   className="mt-4 text-[0.94rem] text-[var(--text-secondary)] leading-relaxed"
                 />
               </motion.div>

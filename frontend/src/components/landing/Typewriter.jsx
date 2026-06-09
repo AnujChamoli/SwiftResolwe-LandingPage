@@ -1,22 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Typewriter reveal — keeps the FULL text in the DOM for SR/SEO and
- * animates a clip-path mask that "wipes" left → right while a caret blinks.
- *
- * Total reveal duration is fixed (~1.2s) regardless of text length, so long
- * paragraphs still complete in time.
+ * Typewriter reveal — full text persists in the DOM (a11y + SEO).
+ * Animates a left→right clip-path wipe and uses CSS pseudo elements
+ * to draw a glowing cyan caret + soft sweep that ride the reveal edge.
  */
 export const Typewriter = ({
   as: Tag = "p",
   text,
   className = "",
-  duration = 1200,
+  duration = 1600,
   delay = 0,
   testId,
 }) => {
   const ref = useRef(null);
-  const [state, setState] = useState("idle"); // idle | typing | done
+  const [state, setState] = useState("idle");
   const startedRef = useRef(false);
 
   useEffect(() => {
@@ -37,7 +35,7 @@ export const Typewriter = ({
       startedRef.current = true;
       window.setTimeout(() => {
         setState("typing");
-        window.setTimeout(() => setState("done"), duration + 50);
+        window.setTimeout(() => setState("done"), duration + 60);
       }, delay);
     };
 
@@ -51,13 +49,14 @@ export const Typewriter = ({
     return () => obs.disconnect();
   }, [duration, delay]);
 
-  const status = state === "typing" ? "is-typing" : state === "done" ? "is-done" : "";
+  const status =
+    state === "typing" ? "is-typing" : state === "done" ? "is-done" : "";
 
   return (
     <Tag ref={ref} className={className} data-testid={testId}>
       <span
         className={`typewriter-target ${status}`}
-        style={{ transitionDuration: `${duration}ms` }}
+        style={{ transitionDuration: `${duration}ms`, "--tw-edge": status === "is-typing" ? "100%" : "0%" }}
       >
         {text}
       </span>

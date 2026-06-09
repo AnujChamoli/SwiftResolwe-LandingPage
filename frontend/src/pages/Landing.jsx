@@ -12,7 +12,7 @@ import { EconomicAdvantage } from "@/components/landing/EconomicAdvantage";
 import { Jurisdiction } from "@/components/landing/Jurisdiction";
 import { FAQTerminal } from "@/components/landing/FAQTerminal";
 import { ScrollProgress } from "@/components/landing/ScrollProgress";
-import { TideDivider } from "@/components/landing/TideDivider";
+import { SectionReveal, ScanDivider } from "@/components/landing/Motion";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 
 export default function Landing() {
@@ -26,24 +26,24 @@ export default function Landing() {
       <Header />
       <main>
         <Hero />
-        <TideDivider from="var(--bg-base)" to="var(--bg-surface-2)" />
-        <TrustAnchor />
-        <TideDivider from="var(--bg-surface-2)" to="var(--bg-base)" flip />
-        <Manifesto />
-        <ResolutionTiers />
-        <TideDivider from="var(--bg-base)" to="var(--bg-surface-2)" />
-        <PanelOfNeutrals />
-        <TideDivider from="var(--bg-surface-2)" to="var(--bg-base)" flip />
-        <DualTrackGateway />
-        <TideDivider from="var(--bg-base)" to="var(--bg-surface-2)" />
-        <EnterpriseVerticals />
-        <TideDivider from="var(--bg-surface-2)" to="var(--bg-base)" flip />
-        <RetailPipeline />
-        <TideDivider from="var(--bg-base)" to="var(--bg-surface-2)" />
-        <EconomicAdvantage />
-        <TideDivider from="var(--bg-surface-2)" to="var(--bg-base)" flip />
-        <Jurisdiction />
-        <FAQTerminal />
+        <ScanDivider />
+        <SectionReveal><TrustAnchor /></SectionReveal>
+        <ScanDivider />
+        <SectionReveal><Manifesto /></SectionReveal>
+        <SectionReveal><ResolutionTiers /></SectionReveal>
+        <ScanDivider />
+        <SectionReveal><PanelOfNeutrals /></SectionReveal>
+        <ScanDivider />
+        <SectionReveal><DualTrackGateway /></SectionReveal>
+        <ScanDivider />
+        <SectionReveal><EnterpriseVerticals /></SectionReveal>
+        <ScanDivider />
+        <SectionReveal><RetailPipeline /></SectionReveal>
+        <ScanDivider />
+        <SectionReveal><EconomicAdvantage /></SectionReveal>
+        <ScanDivider />
+        <SectionReveal><Jurisdiction /></SectionReveal>
+        <SectionReveal><FAQTerminal /></SectionReveal>
       </main>
       <Footer />
     </div>

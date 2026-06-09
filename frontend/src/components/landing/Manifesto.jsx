@@ -24,7 +24,7 @@ export const Manifesto = () => {
         </div>
         <h2 className="font-display text-3xl sm:text-5xl lg:text-[3.4rem] leading-[1.08] font-semibold text-[var(--text-primary)]">
           AI as <span className="text-[var(--accent-deep)]">Scaffolding</span>, <br className="hidden sm:block" />
-          Not the Judiciary.
+          Not the Judge.
         </h2>
         <p className="mt-6 text-base sm:text-lg text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed justify-pretty">
           We use AI to organize filings, summarize complex document stacks, and route cases

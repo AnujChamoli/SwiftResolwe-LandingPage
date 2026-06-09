@@ -6,7 +6,7 @@ import { TrendingDown, Clock, Wallet } from "lucide-react";
 const inrFormat = (n) => {
   if (n >= 1e7) return `₹${(n / 1e7).toFixed(2)} Cr`;
   if (n >= 1e5) return `₹${(n / 1e5).toFixed(1)} L`;
-  return `₹${n.toLocaleString("en-IN")}`;
+  return `₹${Math.round(n).toLocaleString("en-IN")}`;
 };
 
 const MetricCard = ({ value, suffix, label, icon: Icon, testId }) => {
@@ -63,17 +63,39 @@ const TimelineBar = ({ widthPct, color, label, value, note, testId, delay }) => 
   </div>
 );
 
+// Deterministic estimate model — regressive traditional-cost share + claim-scaled court days.
+const estimate = (claim) => {
+  let tradRate;
+  if (claim <= 1_000_000) tradRate = 0.30;
+  else if (claim <= 5_000_000) tradRate = 0.25;
+  else if (claim <= 10_000_000) tradRate = 0.18;
+  else if (claim <= 50_000_000) tradRate = 0.12;
+  else tradRate = 0.08;
+
+  const tradCost = Math.max(claim * tradRate, 150_000);
+  const odrCost = tradCost * 0.12;
+  const costSaved = tradCost - odrCost;
+  const pctSaved = Math.round((costSaved / tradCost) * 100);
+
+  let courtDays;
+  if (claim <= 1_000_000) courtDays = 900;
+  else if (claim <= 5_000_000) courtDays = 1_100;
+  else if (claim <= 10_000_000) courtDays = 1_500;
+  else if (claim <= 50_000_000) courtDays = 2_400;
+  else courtDays = 3_300;
+
+  const odrDays = 45;
+  const daysSaved = courtDays - odrDays;
+
+  return { tradCost, odrCost, costSaved, pctSaved, courtDays, odrDays, daysSaved };
+};
+
 export const EconomicAdvantage = () => {
   const [claim, setClaim] = useState(2500000);
   const min = 100000;
   const max = 100000000;
 
-  const stats = useMemo(() => {
-    const courtCost = claim * 0.32;
-    const odrCost = claim * 0.032;
-    const saved = courtCost - odrCost;
-    return { courtCost, odrCost, saved };
-  }, [claim]);
+  const s = useMemo(() => estimate(claim), [claim]);
 
   return (
     <section
@@ -86,8 +108,7 @@ export const EconomicAdvantage = () => {
         <div className="max-w-3xl">
           <div className="kicker mb-5" data-testid="economics-kicker">COST BENEFIT OPTIMIZATION</div>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-[var(--text-primary)] leading-[1.1]">
-            The math is <span className="text-[var(--warn)]">brutal</span>, and{" "}
-            <span className="text-[var(--accent-deep)]">beautiful</span>.
+            The Numbers Work in <span className="text-[var(--accent-deep)]">Your Favor</span>.
           </h2>
           <p className="mt-5 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed justify-pretty">
             See exactly what you save in time, money, and legal capacity when you move disputes off
@@ -109,7 +130,7 @@ export const EconomicAdvantage = () => {
               <TimelineBar
                 testId="timeline-court"
                 widthPct={97}
-                color="#EA580C"
+                color="#64748B"
                 label="Traditional Indian Court or Ad Hoc Proceedings"
                 value="1,000+ Days"
                 note="Vulnerable to ad interim stays, perennial backlogs, uncapped billable hours, and mandatory physical appearances."
@@ -152,8 +173,7 @@ export const EconomicAdvantage = () => {
                 Set your claim. Watch the math react.
               </h3>
               <p className="mt-3 text-[0.92rem] text-[var(--text-secondary)] leading-relaxed">
-                Drag the slider from ₹1L to ₹10Cr. Figures are illustrative, directional, not
-                contractual.
+                Drag the slider from ₹1L to ₹10Cr. Figures are illustrative and directional.
               </p>
               <div className="mt-7">
                 <div className="flex items-baseline justify-between mb-3">
@@ -191,17 +211,20 @@ export const EconomicAdvantage = () => {
                   Est. Cost Saved
                 </div>
                 <motion.div
-                  key={stats.saved}
+                  key={s.costSaved}
                   initial={{ opacity: 0.4, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35 }}
                   data-testid="calc-cost-saved"
                   className="mt-3 font-display text-3xl sm:text-[2.2rem] font-semibold text-[var(--text-primary)] leading-none"
                 >
-                  {inrFormat(Math.round(stats.saved))}
+                  {inrFormat(s.costSaved)}
                 </motion.div>
-                <div className="mt-2 font-mono-ui text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase">
-                  ~90% versus Litigation
+                <div
+                  data-testid="calc-cost-saved-pct"
+                  className="mt-2 font-mono-ui text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase"
+                >
+                  ~{s.pctSaved}% versus traditional litigation
                 </div>
               </div>
               <div className="rounded-2xl p-5 border border-[var(--accent)]/25 bg-[var(--accent)]/[0.05]">
@@ -209,20 +232,29 @@ export const EconomicAdvantage = () => {
                   Est. Days Saved
                 </div>
                 <motion.div
+                  key={s.daysSaved}
                   initial={{ opacity: 0.4, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35 }}
                   data-testid="calc-days-saved"
                   className="mt-3 font-display text-3xl sm:text-[2.2rem] font-semibold text-[var(--text-primary)] leading-none"
                 >
-                  955+ Days
+                  {s.daysSaved.toLocaleString("en-IN")}+ Days
                 </motion.div>
-                <div className="mt-2 font-mono-ui text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase">
-                  1,000+ to 45
+                <div
+                  data-testid="calc-days-comparison"
+                  className="mt-2 font-mono-ui text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase"
+                >
+                  ~{s.courtDays.toLocaleString("en-IN")}+ days in court to 45 days here
                 </div>
               </div>
-              <div className="sm:col-span-2 rounded-xl border border-dashed border-[var(--border-soft)] p-4 text-[11px] font-mono-ui tracking-[0.14em] text-[var(--text-muted)] uppercase">
-                Illustrative figures, directional only, not a binding fee schedule.
+              <div
+                data-testid="calc-disclaimer"
+                className="sm:col-span-2 rounded-xl border border-dashed border-[var(--border-soft)] p-4 text-[11px] font-mono-ui tracking-[0.06em] text-[var(--text-muted)] leading-relaxed"
+              >
+                Illustrative and directional only. Not a quote or binding fee schedule. Based on
+                published ranges for Indian litigation and arbitration costs and on court pendency
+                data. Actual figures vary by case.
               </div>
             </div>
           </div>

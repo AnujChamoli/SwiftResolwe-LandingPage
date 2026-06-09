@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Handshake, Users, Gavel, ArrowRight, ArrowDown } from "lucide-react";
 import { Typewriter } from "@/components/landing/Typewriter";
+import { CTACluster, CTAItem } from "@/components/landing/Motion";
 
 const TIERS = [
   {
@@ -79,7 +80,8 @@ const TierCard = ({ tier, index }) => {
         as="p"
         testId={`tier-body-${tier.no}`}
         text={tier.copy}
-        delay={120 + index * 80}
+        duration={1600}
+        delay={350 * index}
         className="mt-4 text-[0.94rem] text-[var(--text-secondary)] leading-relaxed"
       />
 
@@ -135,28 +137,34 @@ export const ResolutionTiers = () => {
           ))}
         </div>
 
-        <div className="mt-14 flex flex-col items-start gap-5">
-          <p className="text-[var(--text-secondary)] text-base max-w-3xl leading-relaxed justify-pretty">
-            Unsure whether your claim qualifies for automated negotiation, mediated compromise, or
-            fast track digital arbitration? Run our intake diagnostic.
-          </p>
+        <CTACluster className="mt-14 flex flex-col items-start gap-5">
+          <CTAItem>
+            <p className="text-[var(--text-secondary)] text-base max-w-3xl leading-relaxed justify-pretty">
+              Unsure whether your claim qualifies for automated negotiation, mediated compromise, or
+              fast track digital arbitration? Run our intake diagnostic.
+            </p>
+          </CTAItem>
           <div className="flex flex-wrap gap-3">
-            <button
-              data-testid="tiers-cta-triage"
-              onClick={() => navigate("/triage")}
-              className="btn-primary"
-            >
-              Run 2 Minute Triage Assessment <ArrowRight size={16} />
-            </button>
-            <button
-              data-testid="tiers-cta-enterprise"
-              onClick={() => document.querySelector("#enterprise")?.scrollIntoView({ behavior: "smooth" })}
-              className="btn-outline"
-            >
-              Contact Enterprise Risk Team
-            </button>
+            <CTAItem>
+              <button
+                data-testid="tiers-cta-triage"
+                onClick={() => navigate("/triage")}
+                className="btn-primary cta-primary-arrive"
+              >
+                Run 2 Minute Triage Assessment <ArrowRight size={16} />
+              </button>
+            </CTAItem>
+            <CTAItem>
+              <button
+                data-testid="tiers-cta-enterprise"
+                onClick={() => document.querySelector("#enterprise")?.scrollIntoView({ behavior: "smooth" })}
+                className="btn-outline"
+              >
+                Contact Enterprise Risk Team
+              </button>
+            </CTAItem>
           </div>
-        </div>
+        </CTACluster>
       </div>
     </section>
   );

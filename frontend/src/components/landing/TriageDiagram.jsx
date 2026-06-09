@@ -84,41 +84,43 @@ export const TriageDiagram = () => {
             </g>
           ))}
 
-          {/* Hub */}
+          {/* Hub — enlarged so 'TRIAGE ENGINE' label sits comfortably inside */}
           <g>
-            <circle cx={hub.x} cy={hub.y} r="42" fill="#FFFFFF" stroke="rgba(8,145,178,0.55)" strokeWidth="1.2" />
+            <circle cx={hub.x} cy={hub.y} r="58" fill="#FFFFFF" stroke="rgba(8,145,178,0.55)" strokeWidth="1.2" />
             <motion.circle
               cx={hub.x}
               cy={hub.y}
-              r="42"
+              r="58"
               fill="none"
               stroke="#06B6D4"
               strokeWidth="1"
               initial={{ opacity: 0.55, scale: 1 }}
-              animate={{ opacity: [0.55, 0, 0.55], scale: [1, 1.35, 1] }}
+              animate={{ opacity: [0.55, 0, 0.55], scale: [1, 1.3, 1] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               style={{ transformOrigin: `${hub.x}px ${hub.y}px` }}
             />
-            <circle cx={hub.x} cy={hub.y} r="22" fill="#0E1726" stroke="#0891B2" strokeWidth="1" />
+            <circle cx={hub.x} cy={hub.y} r="38" fill="#0E1726" stroke="#0891B2" strokeWidth="1" />
             <text
               x={hub.x}
-              y={hub.y - 2}
+              y={hub.y - 4}
               textAnchor="middle"
               fontFamily="Geist Mono, monospace"
-              fontSize="9"
+              fontSize="11"
+              fontWeight="500"
               fill="#06B6D4"
-              letterSpacing="2"
+              letterSpacing="2.5"
             >
               TRIAGE
             </text>
             <text
               x={hub.x}
-              y={hub.y + 10}
+              y={hub.y + 12}
               textAnchor="middle"
               fontFamily="Geist Mono, monospace"
-              fontSize="9"
+              fontSize="11"
+              fontWeight="500"
               fill="#F1F5F9"
-              letterSpacing="2"
+              letterSpacing="2.5"
             >
               ENGINE
             </text>

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Landmark, ShoppingBag, Building, Truck, ArrowRight } from "lucide-react";
 import { Typewriter } from "@/components/landing/Typewriter";
+import { CTACluster, CTAItem } from "@/components/landing/Motion";
 
 const VERTICALS = [
   {
@@ -81,7 +82,8 @@ export const EnterpriseVerticals = () => {
                   as="p"
                   testId={`vertical-body-${v.no}`}
                   text={v.copy}
-                  delay={120 + i * 80}
+                  duration={1600}
+                  delay={350 * i}
                   className="mt-4 text-[0.9rem] text-[var(--text-secondary)] leading-relaxed"
                 />
               </motion.div>
@@ -89,20 +91,26 @@ export const EnterpriseVerticals = () => {
           })}
         </div>
 
-        <div className="mt-12 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-[var(--border-soft)] bg-[var(--bg-surface)] p-7">
-          <p className="font-mono-ui text-[13px] sm:text-[14px] tracking-[0.10em] text-[var(--text-primary)] uppercase max-w-3xl leading-relaxed">
-            Architecture Agnostic Integration: Deploy via RESTful APIs, encrypted SFTP batch
-            pipelines, or native CRM webhooks.
-          </p>
+        <CTACluster className="mt-12 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-[var(--border-soft)] bg-[var(--bg-surface)] p-7">
+          <CTAItem>
+            <p className="font-mono-ui text-[13px] sm:text-[14px] tracking-[0.10em] text-[var(--text-primary)] uppercase max-w-3xl leading-relaxed">
+              Architecture Agnostic Integration: Deploy via RESTful APIs, encrypted SFTP batch
+              pipelines, or native CRM webhooks.
+            </p>
+          </CTAItem>
           <div className="flex flex-wrap gap-3">
-            <button data-testid="enterprise-cta-portal" className="btn-primary">
-              Access Developer Portal <ArrowRight size={14} />
-            </button>
-            <button data-testid="enterprise-cta-map" className="btn-outline">
-              Request Integration Map
-            </button>
+            <CTAItem>
+              <button data-testid="enterprise-cta-portal" className="btn-primary cta-primary-arrive">
+                Access Developer Portal <ArrowRight size={14} />
+              </button>
+            </CTAItem>
+            <CTAItem>
+              <button data-testid="enterprise-cta-map" className="btn-outline">
+                Request Integration Map
+              </button>
+            </CTAItem>
           </div>
-        </div>
+        </CTACluster>
       </div>
     </section>
   );

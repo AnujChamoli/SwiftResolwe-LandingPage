@@ -82,7 +82,8 @@ export const DualTrackGateway = () => {
                   as="p"
                   testId={`gateway-body-${t.side}`}
                   text={t.sub}
-                  delay={150 + i * 80}
+                  duration={1600}
+                  delay={350 * i}
                   className="mt-4 text-[var(--text-secondary)] text-[0.96rem] leading-relaxed"
                 />
                 <ul className="mt-7 space-y-3">

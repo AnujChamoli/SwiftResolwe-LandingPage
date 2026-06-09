@@ -1,0 +1,31 @@
+{
+  "summary": "Iteration 3 frontend review complete. Tested all core acceptance criteria for the SwiftResolwe landing page: copy edits (Hero CTA, Manifesto, Economic Advantage headline, Footer brief), TRIAGE ENGINE hub legibility (desktop + mobile), calculator math at 4 slider positions (₹2.5L/₹50L/₹5Cr/₹10Cr) including pct, days-saved, days-comparison, disclaimer string, slate court bar color (no orange/amber anywhere in Economic Advantage), static figures (1,000+ Days / 45 Days), typewriter reveals across all 15 testids (no clipping, is-done within ~3s), 5 verbatim statutes, reduced-motion behavior, anchor smooth-scroll, sticky header, placeholder routes /file-a-dispute /login /triage. ALL functional/copy/math acceptance criteria PASS. One spec deviation found: CSS rules for the .cta-primary-arrive arrival pulse, .btn-primary sheen sweep on hover, and .btn-outline left-to-right cyan fill wipe (with white label) are NOT defined in index.css — the classes are present on elements but produce no animation/visual effect.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "Buttons / index.css", "issue": "Spec A2 not fully implemented: index.css has no rule for .cta-primary-arrive (no one-time arrival pulse), no .btn-primary::before/::after gradient sheen sweep on hover, and no .btn-outline::before fill-wipe. Hover on primary only changes background to accent-deep (no sheen). Hover on outline only tints color to cyan-deep on a 5% cyan background (no left-to-right white-on-cyan fill wipe). 3 buttons carry the .cta-primary-arrive class but receive no styles from it: tiers-cta-triage, enterprise-cta-portal, retail file-claim CTA.", "selector": ".btn-primary, .btn-outline, .cta-primary-arrive", "priority": "MEDIUM"}
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Add CSS for .cta-primary-arrive (one-time arrival pulse keyframe + .cta-primary-arrive class binding) in /app/frontend/src/index.css.",
+    "Add .btn-primary::before (or ::after) white gradient sheen pseudo with translateX hover transition.",
+    "Add .btn-outline::before cyan fill-wipe pseudo (width 0 -> 100% on hover) and change .btn-outline:hover color to #ffffff so label stays legible on the cyan wipe.",
+    "(Optional polish) Honor prefers-reduced-motion for the new pseudo animations and the arrival pulse."
+  ],
+  "critical_code_review_comments": [
+    "Spec A2 contract drift: components apply class names (cta-primary-arrive, etc.) whose CSS counterparts were never added to index.css. The integration is silently a no-op which is easy to miss in code review. Consider colocating button effect CSS with the component or adding a smoke test that asserts the existence of a non-empty CSS rule for cta-primary-arrive.",
+    "EconomicAdvantage estimate() is a pure deterministic function — good. Court bar color is hardcoded as #64748B inline; consider lifting to var(--neg) for parity with the rest of the theme tokens.",
+    "Typewriter intersection observer uses threshold 0.2 with a 1.6s duration — works well in practice, but for the longest text cells the reveal can still feel a touch slow when scrolling fast. Not a defect, just a UX note.",
+    "Static figures (1,000+ Days / 45 Days Fixed Processing Window / 22x) and 5 statutory citations are rendered verbatim and correctly."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a (skipped)", "frontend": "95%"},
+  "seed_data_creation": "None.",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Iteration 3 acceptance grid validated. All copy / math / color / triage-hub / typewriter / reduced-motion / nav / route checks PASS. Only outstanding gap is the missing CSS for .cta-primary-arrive pulse and the .btn-primary sheen / .btn-outline cyan fill-wipe pseudo-elements (Spec A2). Calculator outputs validated at ₹2.5L (855+ Days, ~88%, ~900+), ₹50L (1,055+ Days, ~88%, ~1,100+), ₹5Cr (2,355+ Days, ~2,400+), ₹10Cr (3,255+ Days, ~3,300+) — exactly as specified. Court bar background-color is rgb(100,116,139) (slate) — no orange/amber computed anywhere in the economics section. TRIAGE / ENGINE labels render at fontSize=11 inside the r=58 hub on both 1920px and 390px viewports. Reduced-motion correctly skips typewriter animation (renders is-done immediately). FAQ accordion exists in the page (visible by Q01-Q04 markers) but uses a different testid pattern than 'faq-question-'; functional verification of expand/collapse was not deeply re-tested but iteration_2 confirmed it.",
+  "rca_of_the_issue": "Root cause of the only finding: in iteration 3 the team introduced new class names in the JSX (cta-primary-arrive on three primary CTAs) and intends to add hover sheen / wipe pseudo effects to .btn-primary and .btn-outline, but the corresponding CSS rules were not added to /app/frontend/src/index.css. Reproduction: open DevTools -> document.styleSheets -> search rules with selectorText matching 'cta-primary-arrive' or 'btn-primary::before' or 'btn-outline::before' — none found. Mitigation: append the missing keyframes + rules to index.css (pulse animation bound to .cta-primary-arrive that auto-fires once on mount, sheen pseudo on .btn-primary with translateX on hover, fill-wipe pseudo on .btn-outline with width transition + white text on hover)."
+}

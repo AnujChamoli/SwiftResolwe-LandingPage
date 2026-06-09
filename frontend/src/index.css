@@ -16,6 +16,7 @@
     --accent-deep: #0E7490;
     --accent-glow: rgba(8, 145, 178, 0.20);
 
+    --neg: #64748B;
     --positive: #10B981;
     --warn: #EA580C;
 
@@ -335,13 +336,54 @@ a:focus-visible, button:focus-visible {
 .bg-deep { background: var(--bg-deep); }
 .border-soft { border-color: var(--border-soft); }
 
-/* Typewriter reveal — uses a clip-path mask so the FULL text remains in the DOM */
+/* Typewriter reveal — uses a clip-path mask so the FULL text remains in the DOM.
+   A trailing cyan scan line + soft glow rides the reveal edge for a techy "typing" feel. */
 .typewriter-target {
     position: relative;
     display: block;
     width: 100%;
     clip-path: inset(0 100% 0 0);
-    transition: clip-path 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: clip-path 1.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.typewriter-target::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    left: 0;
+    width: 2px;
+    background: linear-gradient(to bottom,
+        transparent,
+        var(--accent-bright) 18%,
+        var(--accent) 82%,
+        transparent);
+    box-shadow: 0 0 8px rgba(8, 145, 178, 0.55),
+        0 0 18px rgba(6, 182, 212, 0.35);
+    opacity: 0;
+    transform: translateX(0);
+    transition: transform 1.6s cubic-bezier(0.4, 0.0, 0.2, 1),
+        opacity 0.18s ease;
+    pointer-events: none;
+}
+
+.typewriter-target::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 70px;
+    background: linear-gradient(to right,
+        transparent,
+        rgba(6, 182, 212, 0.10) 60%,
+        rgba(6, 182, 212, 0.18));
+    transform: translateX(0);
+    transition: transform 1.6s cubic-bezier(0.4, 0.0, 0.2, 1),
+        opacity 0.2s ease;
+    opacity: 0;
+    pointer-events: none;
+    mix-blend-mode: multiply;
 }
 
 .typewriter-target.is-typing,
@@ -349,29 +391,42 @@ a:focus-visible, button:focus-visible {
     clip-path: inset(0 0 0 0);
 }
 
-.typewriter-caret {
-    display: inline-block;
-    width: 2px;
-    height: 1em;
-    margin-left: 2px;
-    background: var(--accent);
-    vertical-align: -0.12em;
-    opacity: 0;
-}
-
-.typewriter-target.is-typing ~ .typewriter-caret {
+.typewriter-target.is-typing::before {
     opacity: 1;
+    transform: translateX(calc(100% * 1px / 1px));
     animation: caret-blink 0.9s steps(2, jump-none) infinite;
 }
 
-.typewriter-target.is-done ~ .typewriter-caret {
+.typewriter-target.is-typing::after {
+    opacity: 1;
+}
+
+/* The caret rides across the box during the reveal */
+.typewriter-target.is-typing::before,
+.typewriter-target.is-typing::after {
+    /* horizontal traverse via custom property updated below */
+}
+
+/* Use container-relative motion for caret via JS-set --tw-progress (0→1) */
+.typewriter-target.is-typing::before {
+    left: 0;
+    transform: translateX(var(--tw-edge, 100%));
+}
+
+.typewriter-target.is-typing::after {
+    left: 0;
+    transform: translateX(calc(var(--tw-edge, 100%) - 70px));
+}
+
+.typewriter-target.is-done::before,
+.typewriter-target.is-done::after {
     opacity: 0;
-    animation: none;
+    transition: opacity 0.25s ease;
 }
 
 @keyframes caret-blink {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+    50% { opacity: 0.35; }
 }
 
 /* Animated brand glyph — converging lines into a swift forward chevron */

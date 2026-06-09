@@ -62,7 +62,7 @@ export const Hero = () => {
               className="btn-outline"
             >
               <Calendar size={16} />
-              Book a 30 Minute Conflict or Dispute Evaluation
+              Schedule a 30 Minute Dispute Evaluation
             </button>
           </motion.div>
         </motion.div>

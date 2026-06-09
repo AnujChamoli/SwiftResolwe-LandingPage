@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { FileText, MessagesSquare, GitBranch, ArrowRight } from "lucide-react";
 import { Typewriter } from "@/components/landing/Typewriter";
+import { CTACluster, CTAItem } from "@/components/landing/Motion";
 
 const STEPS = [
   {
@@ -72,7 +73,7 @@ export const RetailPipeline = () => {
                     as="p"
                     testId={`retail-step-body-${s.no}`}
                     text={s.copy}
-                    duration={1000}
+                    duration={1600}
                     delay={i * 300}
                     className="mt-4 text-center text-[0.94rem] text-[var(--text-secondary)] leading-relaxed"
                   />
@@ -82,18 +83,22 @@ export const RetailPipeline = () => {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-wrap gap-4 justify-center">
-          <button
-            onClick={() => navigate("/file-a-dispute")}
-            data-testid="retail-cta-file"
-            className="btn-primary"
-          >
-            File a Statement of Claim <ArrowRight size={14} />
-          </button>
-          <button data-testid="retail-cta-fees" className="btn-outline">
-            View Retail Fee Schedule
-          </button>
-        </div>
+        <CTACluster className="mt-16 flex flex-wrap gap-4 justify-center">
+          <CTAItem>
+            <button
+              onClick={() => navigate("/file-a-dispute")}
+              data-testid="retail-cta-file"
+              className="btn-primary cta-primary-arrive"
+            >
+              File a Statement of Claim <ArrowRight size={14} />
+            </button>
+          </CTAItem>
+          <CTAItem>
+            <button data-testid="retail-cta-fees" className="btn-outline">
+              View Retail Fee Schedule
+            </button>
+          </CTAItem>
+        </CTACluster>
       </div>
     </section>
   );

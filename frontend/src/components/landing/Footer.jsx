@@ -44,9 +44,10 @@ export const Footer = () => {
               <Wordmark size="md" />
             </div>
             <p className="text-[0.94rem] text-[var(--text-secondary)] leading-relaxed justify-pretty">
-              India&apos;s premier digital legal tech infrastructure, engineering end to end
-              institutional dispute triage, digital facilitation, and fast track binding
-              adjudication terminals.
+              SwiftResolwe is India&apos;s online platform for resolving disputes quickly, fairly,
+              and with full legal force. We bring negotiation, mediation, and arbitration together
+              in one secure digital space, and carry every case through to a final, legally
+              binding outcome.
             </p>
           </div>
 
