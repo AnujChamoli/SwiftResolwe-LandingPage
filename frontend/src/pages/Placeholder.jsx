@@ -12,8 +12,8 @@ export default function Placeholder({ title, kicker, subtitle, testIdPrefix }) {
     >
       <Header />
       <main className="relative pt-40 pb-32 overflow-hidden">
-        <div className="absolute inset-0 bg-grid-faint opacity-30" />
-        <div className="aurora" />
+        <div className="absolute inset-0 bg-grid-faint opacity-50" />
+        <div className="hero-tint" />
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -21,7 +21,7 @@ export default function Placeholder({ title, kicker, subtitle, testIdPrefix }) {
           className="relative max-w-3xl mx-auto px-5 sm:px-8 text-center"
         >
           <div className="kicker justify-center mb-6">{kicker}</div>
-          <h1 className="font-display text-4xl sm:text-5xl font-semibold leading-[1.08]">
+          <h1 className="font-display text-4xl sm:text-5xl font-semibold leading-[1.08] text-[var(--text-primary)]">
             {title}
           </h1>
           <p className="mt-6 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed">
@@ -30,13 +30,13 @@ export default function Placeholder({ title, kicker, subtitle, testIdPrefix }) {
 
           <div
             data-testid={`${testIdPrefix}-form-placeholder`}
-            className="mt-12 glass rounded-2xl p-8 text-left"
+            className="mt-12 card-light p-8 text-left"
           >
-            <div className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--accent)] uppercase mb-4">
+            <div className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--accent-deep)] uppercase mb-4">
               Coming Soon · Form Placeholder
             </div>
             <div className="space-y-4">
-              {["Full Name", "Email / Mobile", "Brief Description"].map((label) => (
+              {["Full Name", "Email or Mobile", "Brief Description"].map((label) => (
                 <div key={label}>
                   <label className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--text-muted)] uppercase">
                     {label}

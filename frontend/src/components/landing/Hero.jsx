@@ -16,11 +16,11 @@ export const Hero = () => {
   return (
     <section
       data-testid="hero-section"
-      className="relative pt-28 sm:pt-32 lg:pt-40 pb-20 lg:pb-28 overflow-hidden grain"
+      className="relative pt-32 sm:pt-36 lg:pt-44 pb-20 lg:pb-28 overflow-hidden"
     >
-      <div className="absolute inset-0 bg-grid-faint opacity-[0.35]" />
-      <div className="aurora" />
-      <div className="absolute -top-24 -right-32 w-[640px] h-[640px] rounded-full bg-[var(--accent)] opacity-[0.07] blur-[140px] drift" />
+      <div className="absolute inset-0 bg-grid-faint opacity-50" />
+      <div className="hero-tint" />
+      <div className="absolute -top-32 -right-32 w-[620px] h-[620px] rounded-full bg-[var(--accent-bright)] opacity-[0.10] blur-[140px] drift" />
 
       <div className="relative max-w-7xl mx-auto px-5 sm:px-8 grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-16 items-center">
         <motion.div variants={stagger} initial="hidden" animate="show">
@@ -31,20 +31,21 @@ export const Hero = () => {
           <motion.h1
             variants={item}
             data-testid="hero-headline"
-            className="font-display text-4xl sm:text-5xl lg:text-[4rem] leading-[1.04] font-semibold text-[var(--text-primary)] max-w-[18ch]"
+            className="font-display text-[2.4rem] sm:text-[3.1rem] lg:text-[3.5rem] leading-[1.04] font-semibold text-[var(--text-primary)] max-w-[20ch]"
           >
             Conflict is a variable; <br className="hidden sm:block" />
-            <span className="text-[var(--accent)]">Resolution</span> is a certainty.
+            <span className="text-[var(--accent-deep)]">Resolution</span> a Constant.
           </motion.h1>
 
           <motion.p
             variants={item}
             data-testid="hero-subheadline"
-            className="mt-6 text-base sm:text-lg text-[var(--text-secondary)] max-w-[58ch] leading-relaxed"
+            className="mt-6 text-base sm:text-lg text-[var(--text-secondary)] max-w-[58ch] leading-relaxed justify-pretty"
           >
-            Bypass traditional courtroom stalemates. SwiftResolwe serves as the algorithmic bridge
-            that automatically triages B2B and B2C disputes into optimized legal tiers, delivering
-            enforceable finality with zero operational friction.
+            Skip the long delays of traditional courts. SwiftResolwe is a smart online platform
+            that automatically sends every business or consumer dispute to the right resolution
+            path, then carries it through to a final, legally binding result. Fast, simple, and
+            fully online.
           </motion.p>
 
           <motion.div variants={item} className="mt-9 flex flex-wrap items-center gap-4">
@@ -61,18 +62,8 @@ export const Hero = () => {
               className="btn-outline"
             >
               <Calendar size={16} />
-              Book a 30-min Conflict/Dispute Evaluation
+              Book a 30 Minute Conflict or Dispute Evaluation
             </button>
-          </motion.div>
-
-          <motion.div variants={item} className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-xs font-mono-ui text-[var(--text-muted)] uppercase tracking-[0.18em]">
-            <span>ISO 27001</span>
-            <span className="w-1 h-1 rounded-full bg-[var(--text-muted)]" />
-            <span>DPDP Act 2023</span>
-            <span className="w-1 h-1 rounded-full bg-[var(--text-muted)]" />
-            <span>BSA 2023 Compliant</span>
-            <span className="w-1 h-1 rounded-full bg-[var(--text-muted)]" />
-            <span>28 States &amp; UTs</span>
           </motion.div>
         </motion.div>
 

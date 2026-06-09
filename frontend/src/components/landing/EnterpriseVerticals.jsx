@@ -1,19 +1,20 @@
 import { motion } from "framer-motion";
 import { Landmark, ShoppingBag, Building, Truck, ArrowRight } from "lucide-react";
+import { Typewriter } from "@/components/landing/Typewriter";
 
 const VERTICALS = [
   {
     no: "01",
     icon: Landmark,
     title: "Banking, NBFCs & Fintech",
-    pitch: "High-Volume NPA & Delinquency Routing",
-    copy: "Programmatic ingestion of retail loan defaults. The engine initiates automated, legally valid notices, executing parallel processing workflows for Section 138 (NI Act) and Section 25 (PSS Act) digital negotiation and fast-track arbitration pipelines.",
+    pitch: "High Volume NPA & Delinquency Routing",
+    copy: "Programmatic ingestion of retail loan defaults. The engine initiates automated, legally valid notices, executing parallel processing workflows for Section 138 (NI Act) and Section 25 (PSS Act) digital negotiation and fast track arbitration pipelines.",
   },
   {
     no: "02",
     icon: ShoppingBag,
-    title: "E-Commerce & Digital Marketplaces",
-    pitch: "High-Volume, Low-Value (HVLV) Resolution",
+    title: "E Commerce & Digital Marketplaces",
+    pitch: "High Volume, Low Value (HVLV) Resolution",
     copy: "API routing of merchant payment discrepancies, SLA failures, and gross consumer grievances. Resolves digital transaction friction via automated Tier 1 settlement workflows without degrading platform retention metrics or GMV.",
   },
   {
@@ -21,14 +22,14 @@ const VERTICALS = [
     icon: Building,
     title: "Real Estate & Commercial Infrastructure",
     pitch: "Tenancy & Asset Adjudication",
-    copy: "Accelerated dispute execution for commercial lease agreement breaches, contractor non-performance, and vendor payment delays, bypassing congested statutory tribunals to secure enforceable civil decrees.",
+    copy: "Accelerated dispute execution for commercial lease agreement breaches, contractor non performance, and vendor payment delays, bypassing congested statutory tribunals to secure enforceable civil decrees.",
   },
   {
     no: "04",
     icon: Truck,
     title: "Supply Chain, Logistics & Procurement",
     pitch: "Operational Continuity & Transit Conflicts",
-    copy: "Rapid intervention for cross-border supply chain breakdowns and procurement contract breaches. Emphasizes mandatory Tier 2 Mediation under the Mediation Act, 2023, to salvage critical vendor partnerships.",
+    copy: "Rapid intervention for cross border supply chain breakdowns and procurement contract breaches. Emphasizes mandatory Tier 2 Mediation under the Mediation Act, 2023, to salvage critical vendor partnerships.",
   },
 ];
 
@@ -37,15 +38,15 @@ export const EnterpriseVerticals = () => {
     <section
       id="enterprise"
       data-testid="enterprise-section"
-      className="relative py-24 sm:py-32 bg-[var(--bg-surface)] border-y border-[var(--border-soft)] overflow-hidden"
+      className="relative py-24 sm:py-32 bg-[var(--bg-surface-2)] border-y border-[var(--border-soft)] overflow-hidden"
     >
-      <div className="absolute inset-0 bg-grid-faint opacity-25" />
+      <div className="absolute inset-0 bg-grid-faint opacity-50" />
       <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
         <div className="max-w-4xl">
           <div className="kicker mb-5" data-testid="enterprise-kicker">SYSTEMIC INTEGRATION</div>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-[var(--text-primary)] leading-[1.1]">
-            Core <span className="text-[var(--accent)]">CBS/ERP</span> Ingestion. <br className="hidden sm:block" />
-            Sectoral Algorithmic Execution.
+            Plugs Into Your <span className="text-[var(--accent-deep)]">Core Banking and ERP</span> Systems. <br className="hidden sm:block" />
+            <span className="text-[var(--accent-deep)]">Built for Every Sector.</span>
           </h2>
         </div>
 
@@ -60,10 +61,10 @@ export const EnterpriseVerticals = () => {
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.55, delay: i * 0.06 }}
                 data-testid={`vertical-${v.no}`}
-                className="glass rounded-2xl p-6 glass-hover h-full flex flex-col"
+                className="card-light p-6 h-full flex flex-col"
               >
                 <div className="flex items-center justify-between mb-5">
-                  <div className="inline-flex w-10 h-10 items-center justify-center rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)]/20 text-[var(--accent)]">
+                  <div className="inline-flex w-10 h-10 items-center justify-center rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)]/20 text-[var(--accent-deep)]">
                     <Icon size={18} />
                   </div>
                   <span className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--text-muted)]">
@@ -73,19 +74,23 @@ export const EnterpriseVerticals = () => {
                 <h3 className="font-display text-lg font-semibold text-[var(--text-primary)] leading-snug">
                   {v.title}
                 </h3>
-                <div className="mt-2 font-mono-ui text-[10.5px] tracking-[0.14em] text-[var(--accent)] uppercase">
+                <div className="mt-2 font-mono-ui text-[10.5px] tracking-[0.14em] text-[var(--accent-deep)] uppercase">
                   {v.pitch}
                 </div>
-                <p className="mt-4 text-[0.88rem] text-[var(--text-secondary)] leading-relaxed">
-                  {v.copy}
-                </p>
+                <Typewriter
+                  as="p"
+                  testId={`vertical-body-${v.no}`}
+                  text={v.copy}
+                  delay={120 + i * 80}
+                  className="mt-4 text-[0.9rem] text-[var(--text-secondary)] leading-relaxed"
+                />
               </motion.div>
             );
           })}
         </div>
 
-        <div className="mt-12 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-[var(--border-soft)] bg-[var(--bg-surface-2)]/60 p-6">
-          <p className="font-mono-ui text-[11px] tracking-[0.16em] text-[var(--text-secondary)] uppercase max-w-3xl">
+        <div className="mt-12 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-[var(--border-soft)] bg-[var(--bg-surface)] p-7">
+          <p className="font-mono-ui text-[13px] sm:text-[14px] tracking-[0.10em] text-[var(--text-primary)] uppercase max-w-3xl leading-relaxed">
             Architecture Agnostic Integration: Deploy via RESTful APIs, encrypted SFTP batch
             pipelines, or native CRM webhooks.
           </p>

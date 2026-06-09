@@ -15,17 +15,17 @@ const MetricCard = ({ value, suffix, label, icon: Icon, testId }) => {
     <div
       ref={ref}
       data-testid={testId}
-      className="glass rounded-2xl p-6 glass-hover"
+      className="card-light p-6"
     >
       <div className="flex items-center justify-between">
-        <Icon size={18} className="text-[var(--accent)]" />
+        <Icon size={18} className="text-[var(--accent-deep)]" />
         <span className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--text-muted)]">
           METRIC
         </span>
       </div>
       <div className="mt-5 font-display text-5xl sm:text-[3.4rem] font-semibold text-[var(--text-primary)] leading-none">
         <span>{display}</span>
-        <span className="text-[var(--accent)]">{suffix}</span>
+        <span className="text-[var(--accent-deep)]">{suffix}</span>
       </div>
       <div className="mt-3 font-mono-ui text-[11px] tracking-[0.22em] text-[var(--text-secondary)] uppercase">
         {label}
@@ -37,10 +37,8 @@ const MetricCard = ({ value, suffix, label, icon: Icon, testId }) => {
 const TimelineBar = ({ widthPct, color, label, value, note, testId, delay }) => (
   <div data-testid={testId} className="relative">
     <div className="flex items-baseline justify-between mb-3">
-      <div>
-        <div className="font-mono-ui text-[10px] tracking-[0.22em] uppercase" style={{ color }}>
-          {label}
-        </div>
+      <div className="font-mono-ui text-[10px] tracking-[0.22em] uppercase" style={{ color }}>
+        {label}
       </div>
       <div className="font-display text-xl font-semibold" style={{ color }}>
         {value}
@@ -54,25 +52,25 @@ const TimelineBar = ({ widthPct, color, label, value, note, testId, delay }) => 
         transition={{ duration: 1.6, delay, ease: [0.16, 1, 0.3, 1] }}
         className="h-full rounded-full"
         style={{
-          background: `linear-gradient(to right, ${color}99, ${color})`,
+          background: `linear-gradient(to right, ${color}cc, ${color})`,
           boxShadow: `0 0 24px ${color}40`,
         }}
       />
     </div>
-    <p className="mt-3 text-[0.85rem] text-[var(--text-secondary)] leading-relaxed">
+    <p className="mt-3 text-[0.88rem] text-[var(--text-secondary)] leading-relaxed">
       {note}
     </p>
   </div>
 );
 
 export const EconomicAdvantage = () => {
-  const [claim, setClaim] = useState(2500000); // ₹25L default
+  const [claim, setClaim] = useState(2500000);
   const min = 100000;
   const max = 100000000;
 
   const stats = useMemo(() => {
-    const courtCost = claim * 0.32; // illustrative
-    const odrCost = claim * 0.032; // ~90% savings
+    const courtCost = claim * 0.32;
+    const odrCost = claim * 0.032;
     const saved = courtCost - odrCost;
     return { courtCost, odrCost, saved };
   }, [claim]);
@@ -81,100 +79,80 @@ export const EconomicAdvantage = () => {
     <section
       id="economics"
       data-testid="economics-section"
-      className="relative py-24 sm:py-32 bg-[var(--bg-surface)] border-y border-[var(--border-soft)] overflow-hidden"
+      className="relative py-24 sm:py-32 bg-[var(--bg-surface-2)] border-y border-[var(--border-soft)] overflow-hidden"
     >
-      <div className="absolute inset-0 bg-grid-faint opacity-25" />
+      <div className="absolute inset-0 bg-grid-faint opacity-50" />
       <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
         <div className="max-w-3xl">
-          <div className="kicker mb-5" data-testid="economics-kicker">COST-BENEFIT OPTIMIZATION</div>
+          <div className="kicker mb-5" data-testid="economics-kicker">COST BENEFIT OPTIMIZATION</div>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-[var(--text-primary)] leading-[1.1]">
-            The math is <span className="text-[var(--warn)]">brutal</span> — and{" "}
-            <span className="text-[var(--accent)]">beautiful</span>.
+            The math is <span className="text-[var(--warn)]">brutal</span>, and{" "}
+            <span className="text-[var(--accent-deep)]">beautiful</span>.
           </h2>
-          <p className="mt-5 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed">
+          <p className="mt-5 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed justify-pretty">
             See exactly what you save in time, money, and legal capacity when you move disputes off
             the docket and onto SwiftResolwe.
           </p>
         </div>
 
-        {/* Calculator grid */}
         <div className="mt-14 grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-10">
-          {/* Left: timeline */}
-          <div className="glass rounded-2xl p-7 sm:p-9">
-            <div className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--accent)] uppercase">
+          {/* Timeline */}
+          <div className="card-light p-7 sm:p-9">
+            <div className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--accent-deep)] uppercase">
               Dynamic Resolution Timeline
             </div>
             <h3 className="mt-3 font-display text-xl sm:text-2xl font-semibold text-[var(--text-primary)]">
-              Court vs. SwiftResolwe — true 22× scale.
+              Court versus SwiftResolwe. True 22x scale.
             </h3>
 
             <div className="mt-10 space-y-10">
               <TimelineBar
                 testId="timeline-court"
                 widthPct={97}
-                color="#FB923C"
-                label="Traditional Indian Court / Ad-Hoc Proceedings"
+                color="#EA580C"
+                label="Traditional Indian Court or Ad Hoc Proceedings"
                 value="1,000+ Days"
-                note="Vulnerable to ad-interim stays, perennial backlogs, uncapped billable hours, and mandatory physical appearances."
+                note="Vulnerable to ad interim stays, perennial backlogs, uncapped billable hours, and mandatory physical appearances."
                 delay={0}
               />
               <TimelineBar
                 testId="timeline-odr"
                 widthPct={4.5}
-                color="#22D3EE"
+                color="#0891B2"
                 label="The SwiftResolwe ODR Engine (active state)"
                 value="45 Days Fixed Processing Window"
-                note="Driven by blockchain-anchored cryptographic evidence under Section 63 of the BSA, 2023, and fully recoverable legal expenses under Section 31A of the Arbitration Act."
+                note="Driven by blockchain anchored cryptographic evidence under Section 63 of the BSA, 2023, and fully recoverable legal expenses under Section 31A of the Arbitration Act."
                 delay={0.3}
               />
             </div>
           </div>
 
-          {/* Right: metrics */}
           <div className="grid gap-4 sm:gap-5 content-start">
-            <MetricCard
-              testId="metric-faster"
-              value={22}
-              suffix="x"
-              label="Faster Resolution"
-              icon={Clock}
-            />
-            <MetricCard
-              testId="metric-saved"
-              value={90}
-              suffix="%"
-              label="Total Costs Saved"
-              icon={TrendingDown}
-            />
-            <MetricCard
-              testId="metric-recovery"
-              value={78}
-              suffix="%"
-              label="Aggregate Recovery Rate"
-              icon={Wallet}
-            />
+            <MetricCard testId="metric-faster" value={22} suffix="x" label="Faster Resolution" icon={Clock} />
+            <MetricCard testId="metric-saved" value={90} suffix="%" label="Total Costs Saved" icon={TrendingDown} />
+            <MetricCard testId="metric-recovery" value={78} suffix="%" label="Aggregate Recovery Rate" icon={Wallet} />
           </div>
         </div>
 
-        {/* Interactive claim slider */}
+        {/* Slider */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6 }}
           data-testid="claim-calculator"
-          className="mt-10 glass rounded-2xl p-7 sm:p-9"
+          className="mt-10 card-light p-7 sm:p-9"
         >
           <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 items-center">
             <div>
-              <div className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--accent)] uppercase">
-                Interactive: Claim-Amount Lever
+              <div className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--accent-deep)] uppercase">
+                Interactive: Claim Amount Lever
               </div>
               <h3 className="mt-3 font-display text-xl sm:text-2xl font-semibold text-[var(--text-primary)]">
                 Set your claim. Watch the math react.
               </h3>
-              <p className="mt-3 text-[0.9rem] text-[var(--text-secondary)] leading-relaxed">
-                Drag the slider from ₹1L to ₹10Cr. Figures are illustrative — directional, not
+              <p className="mt-3 text-[0.92rem] text-[var(--text-secondary)] leading-relaxed">
+                Drag the slider from ₹1L to ₹10Cr. Figures are illustrative, directional, not
                 contractual.
               </p>
               <div className="mt-7">
@@ -184,7 +162,7 @@ export const EconomicAdvantage = () => {
                   </span>
                   <span
                     data-testid="claim-display"
-                    className="font-display text-2xl font-semibold text-[var(--accent)]"
+                    className="font-display text-2xl font-semibold text-[var(--accent-deep)]"
                   >
                     {inrFormat(claim)}
                   </span>
@@ -209,7 +187,7 @@ export const EconomicAdvantage = () => {
 
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="rounded-2xl p-5 border border-[var(--accent)]/25 bg-[var(--accent)]/[0.05]">
-                <div className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--accent)] uppercase">
+                <div className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--accent-deep)] uppercase">
                   Est. Cost Saved
                 </div>
                 <motion.div
@@ -223,11 +201,11 @@ export const EconomicAdvantage = () => {
                   {inrFormat(Math.round(stats.saved))}
                 </motion.div>
                 <div className="mt-2 font-mono-ui text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase">
-                  ~90% vs Litigation
+                  ~90% versus Litigation
                 </div>
               </div>
               <div className="rounded-2xl p-5 border border-[var(--accent)]/25 bg-[var(--accent)]/[0.05]">
-                <div className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--accent)] uppercase">
+                <div className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--accent-deep)] uppercase">
                   Est. Days Saved
                 </div>
                 <motion.div
@@ -240,11 +218,11 @@ export const EconomicAdvantage = () => {
                   955+ Days
                 </motion.div>
                 <div className="mt-2 font-mono-ui text-[10px] tracking-[0.2em] text-[var(--text-muted)] uppercase">
-                  1,000+ → 45
+                  1,000+ to 45
                 </div>
               </div>
               <div className="sm:col-span-2 rounded-xl border border-dashed border-[var(--border-soft)] p-4 text-[11px] font-mono-ui tracking-[0.14em] text-[var(--text-muted)] uppercase">
-                Illustrative figures · directional only · not a binding fee schedule
+                Illustrative figures, directional only, not a binding fee schedule.
               </div>
             </div>
           </div>
@@ -258,17 +236,17 @@ export const EconomicAdvantage = () => {
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.55 }}
             data-testid="fee-panel-institutional"
-            className="glass rounded-2xl p-7 glass-hover"
+            className="card-light p-7"
           >
-            <div className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--accent)] uppercase">
+            <div className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--accent-deep)] uppercase">
               Panel A · Institutional Portfolio Licensing
             </div>
             <h3 className="mt-3 font-display text-xl font-semibold text-[var(--text-primary)]">
               Engineered for Banks, NBFCs, and Fintech platforms.
             </h3>
-            <p className="mt-3 text-[0.92rem] text-[var(--text-secondary)] leading-relaxed">
-              Custom-tailor your operational costs via bulk annualized SaaS subscription matrices
-              or volume-scaled API ingestion tiers.
+            <p className="mt-3 text-[0.94rem] text-[var(--text-secondary)] leading-relaxed">
+              Custom tailor your operational costs via bulk annualized SaaS subscription matrices
+              or volume scaled API ingestion tiers.
             </p>
             <a href="#" className="cta-link mt-5" data-testid="fee-cta-institutional">
               Request Institutional Fee Schedule →
@@ -280,21 +258,21 @@ export const EconomicAdvantage = () => {
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.55, delay: 0.08 }}
             data-testid="fee-panel-retail"
-            className="glass rounded-2xl p-7 glass-hover"
+            className="card-light p-7"
           >
-            <div className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--accent)] uppercase">
+            <div className="font-mono-ui text-[10px] tracking-[0.22em] text-[var(--accent-deep)] uppercase">
               Panel B · Retail MSME & Standalone Claims
             </div>
             <h3 className="mt-3 font-display text-xl font-semibold text-[var(--text-primary)]">
               Zero onboarding charges. Pay only at lodging.
             </h3>
-            <p className="mt-3 text-[0.92rem] text-[var(--text-secondary)] leading-relaxed">
+            <p className="mt-3 text-[0.94rem] text-[var(--text-secondary)] leading-relaxed">
               Zero onboarding charges or recurring infrastructure maintenance retainers. Pay a
-              transparent, value-scaled flat fee strictly tied to your claim bracket amount at the
+              transparent, value scaled flat fee strictly tied to your claim bracket amount at the
               moment of file lodging.
             </p>
             <a href="#" className="cta-link mt-5" data-testid="fee-cta-retail">
-              Download Scale-Based Retail Fee Matrix (PDF) →
+              Download Scale Based Retail Fee Matrix (PDF) →
             </a>
           </motion.div>
         </div>

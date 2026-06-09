@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Scale, Briefcase, MessageSquare, ArrowRight } from "lucide-react";
+import { Typewriter } from "@/components/landing/Typewriter";
 
 const CATEGORIES = [
   {
@@ -11,8 +12,8 @@ const CATEGORIES = [
   {
     no: "02",
     icon: Briefcase,
-    title: "Sector-Specific Neutrals",
-    copy: "Complex commercial breaches require industry-specific comprehension. B2B conflicts are algorithmically matched with specialized neutrals vetted across distinct verticals—Banking, NBFC, Fintech, Real Estate, and Supply Chain Logistics. This prevents adjudicatory failure on technical commercial contracts and ensures precise interpretation of sector-specific regulatory frameworks.",
+    title: "Sector Specific Neutrals",
+    copy: "Complex commercial breaches require industry specific comprehension. B2B conflicts are algorithmically matched with specialized neutrals vetted across distinct verticals. Banking, NBFC, Fintech, Real Estate, and Supply Chain Logistics. This prevents adjudicatory failure on technical commercial contracts and ensures precise interpretation of sector specific regulatory frameworks.",
   },
   {
     no: "03",
@@ -27,21 +28,21 @@ export const PanelOfNeutrals = () => {
     <section
       id="panel"
       data-testid="panel-section"
-      className="relative py-24 sm:py-32 bg-[var(--bg-surface)] border-y border-[var(--border-soft)] overflow-hidden"
+      className="relative py-24 sm:py-32 bg-[var(--bg-surface-2)] border-y border-[var(--border-soft)] overflow-hidden"
     >
-      <div className="absolute inset-0 bg-grid-faint opacity-25" />
+      <div className="absolute inset-0 bg-grid-faint opacity-50" />
       <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
         <div className="max-w-3xl">
           <div className="kicker mb-5" data-testid="panel-kicker">DISPUTE RESOLUTION PROFESSIONALS</div>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-[var(--text-primary)] leading-[1.1]">
             Algorithmic Triage. <br className="hidden sm:block" />
-            <span className="text-[var(--accent)]">Domain-Expert</span> Adjudication.
+            <span className="text-[var(--accent-deep)]">Domain Expert</span> Adjudication.
           </h2>
-          <p className="mt-5 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed">
-            The technological infrastructure ensures speed; the empanelled roster ensures
-            unassailable legal validity. SwiftResolwe deploys independent, qualified neutrals
-            vetted for domain-specific expertise, executing proceedings in strict compliance with
-            statutory mandates of independence and impartiality.
+          <p className="mt-5 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed justify-pretty">
+            Technology makes resolution fast. Our panel of experts makes it legally sound. Every
+            dispute is handled by an independent, qualified professional chosen for real
+            experience in that exact field, working under strict legal standards of fairness and
+            neutrality.
           </p>
         </div>
 
@@ -56,10 +57,10 @@ export const PanelOfNeutrals = () => {
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.6, delay: i * 0.08 }}
                 data-testid={`neutral-cat-${c.no}`}
-                className="glass rounded-2xl p-7 sm:p-8 glass-hover h-full"
+                className="card-light p-7 sm:p-8 h-full"
               >
                 <div className="flex items-center justify-between">
-                  <div className="inline-flex w-11 h-11 items-center justify-center rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)]/20 text-[var(--accent)]">
+                  <div className="inline-flex w-11 h-11 items-center justify-center rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)]/20 text-[var(--accent-deep)]">
                     <Icon size={20} />
                   </div>
                   <span className="font-mono-ui text-[11px] tracking-[0.22em] text-[var(--text-muted)]">
@@ -69,16 +70,20 @@ export const PanelOfNeutrals = () => {
                 <h3 className="mt-5 font-display text-xl sm:text-[1.4rem] font-semibold text-[var(--text-primary)] leading-snug">
                   {c.title}
                 </h3>
-                <p className="mt-4 text-[0.92rem] text-[var(--text-secondary)] leading-relaxed">
-                  {c.copy}
-                </p>
+                <Typewriter
+                  as="p"
+                  testId={`neutral-body-${c.no}`}
+                  text={c.copy}
+                  delay={150 + i * 80}
+                  className="mt-4 text-[0.94rem] text-[var(--text-secondary)] leading-relaxed"
+                />
               </motion.div>
             );
           })}
         </div>
 
-        <div className="mt-12 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 rounded-2xl border border-[var(--border-soft)] bg-[var(--bg-surface-2)]/60 p-6">
-          <p className="font-mono-ui text-[11px] tracking-[0.16em] text-[var(--text-secondary)] uppercase">
+        <div className="mt-12 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 rounded-2xl border border-[var(--border-soft)] bg-[var(--bg-surface)] p-7">
+          <p className="font-mono-ui text-[13px] sm:text-[14px] tracking-[0.12em] text-[var(--text-primary)] uppercase leading-relaxed">
             Empanelment Standard: Minimum 10+ Years Bar/Bench Experience &nbsp;|&nbsp; Mandatory
             Performance Evaluation &nbsp;|&nbsp; Section 12 Statutory Disclosures
           </p>
