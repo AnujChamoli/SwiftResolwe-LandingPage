@@ -1,0 +1,24 @@
+{
+  "summary": "Focused re-test of iteration_3 MEDIUM gap (button hover/arrival CSS). All previously missing CSS rules are now present and active. (1) document.styleSheets contains .cta-primary-arrive, .btn-primary::before, .btn-primary:hover::before, .btn-outline, .btn-outline:hover and @keyframes pulse-glow. (2) btn-primary sheen: ::before translates from matrix(-249.8,0) → matrix(+172.3,0) at ~350ms → matrix(+249.8,0) at ~900ms with transition-duration 0.75s — mid-sweep verified. (3) btn-outline wipe: background-position animates 100% 0 → 4.7% 0 (250ms) → 0px 0px (650ms); color transitions from rgb(14,23,38) → rgb(230,231,233) → rgb(255,255,255) over the same interval; label text 'Schedule a 30 Minute Dispute Evaluation' remains visible at every frame (not covered/erased). (4) cta-primary-arrive on tiers-cta-triage: computed animationName='pulse-glow', duration 1.4s, iteration-count 1, delay 0.2s. Same animation confirmed on enterprise-cta-portal and retail-cta-file. (5) Hero CTA labels intact. Iteration_3 MEDIUM finding is RESOLVED.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": ["/app/tests/test_hover_css.py"],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "The .btn-outline implementation uses a background-position trick (200%-wide linear-gradient sliding from 100% to 0%) instead of a ::before fill-wipe. This is actually a CLEANER approach than the originally suggested pseudo because it animates the button surface itself, so the text node is never occluded by a stacking-context sibling. Verified via post-hover computed color rgb(255,255,255) and unchanged innerText.",
+    "Minor: .btn-outline computed CSS shows empty background-image/background-repeat/etc. shorthand fields in dev mode — this is a cosmetic browser quirk when the background longhand is set after a shorthand reset; the visual rendering is correct.",
+    "@media (prefers-reduced-motion: reduce) correctly disables both .cta-primary-arrive animation and .btn-primary::before transition; verified rule exists at index.css ~lines 298-302.",
+    "Suggestion (non-blocking): add a tiny smoke test (vitest/jest) that asserts the existence of CSSRule objects for these selectors so future regressions on contract-driven class names are caught at build/CI time. This same drift caused the iteration_3 MEDIUM finding."
+  ],
+  "updated_files": ["/app/tests/test_hover_css.py"],
+  "success_rate": {"backend": "n/a (skipped)", "frontend": "100%"},
+  "seed_data_creation": "None.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 4 focused re-test of CSS button effects PASSED. All five CSS rules from iteration_3 gap are present. btn-primary sheen sweep (0.75s cubic-bezier), btn-outline cyan wipe with white label (0.5s background-position transition + color → white), and cta-primary-arrive pulse-glow keyframes (1.4s, 1 iteration, 0.2s delay) all verified by computed style snapshots taken at hover-start/mid/end. The .btn-outline implementation was deliberately switched from ::before fill-wipe to a background-position-on-200%-gradient approach — this is intentional and CORRECT (label remains visible). All other iteration_3 acceptance criteria (copy, calculator math, slate court bar, typewriter, triage hub label, footer, statutes) were not re-validated per the request scope; they remain PASS as of iteration_3.",
+  "rca_of_the_issue": "Iteration_3 finding root cause was missing CSS rules in /app/frontend/src/index.css despite the class names being applied in JSX. Fix applied: appended @keyframes pulse-glow, .cta-primary-arrive { animation: ... 1 }, .btn-primary::before with translateX(-120%) → 120% sheen on :hover, and .btn-outline using a 200%-wide horizontal gradient with background-position 100%→0% on :hover and color → #fff. The choice to use background-position (instead of a ::before width wipe) eliminates any risk of the cyan fill occluding the text node — verified by post-hover innerText still equals 'Schedule a 30 Minute Dispute Evaluation' with color rgb(255,255,255). Resolved."
+}

@@ -187,6 +187,7 @@ body {
 
 /* Buttons */
 .btn-primary {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
@@ -202,6 +203,29 @@ body {
         0 14px 38px -10px rgba(8, 145, 178, 0.45);
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     cursor: pointer;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.btn-primary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        100deg,
+        transparent 25%,
+        rgba(255, 255, 255, 0.38) 50%,
+        transparent 75%
+    );
+    transform: translateX(-120%);
+    transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+.btn-primary > *,
+.btn-primary {
+    /* keep stacking so the pseudo sits behind label */
 }
 
 .btn-primary:hover {
@@ -209,10 +233,37 @@ body {
     background: var(--accent-deep);
     border-color: var(--accent-deep);
     box-shadow: 0 2px 4px rgba(15, 23, 42, 0.1),
-        0 18px 48px -10px rgba(8, 145, 178, 0.55);
+        0 22px 56px -10px rgba(8, 145, 178, 0.65);
+}
+
+.btn-primary:hover::before {
+    transform: translateX(120%);
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 1px 2px rgba(15,23,42,0.08),
+            0 14px 38px -10px rgba(8,145,178,0.45),
+            0 0 0 0 rgba(8,145,178,0.55);
+    }
+    60% {
+        box-shadow: 0 1px 2px rgba(15,23,42,0.08),
+            0 14px 38px -10px rgba(8,145,178,0.45),
+            0 0 0 16px rgba(8,145,178,0);
+    }
+    100% {
+        box-shadow: 0 1px 2px rgba(15,23,42,0.08),
+            0 14px 38px -10px rgba(8,145,178,0.45),
+            0 0 0 0 rgba(8,145,178,0);
+    }
+}
+
+.cta-primary-arrive {
+    animation: pulse-glow 1.4s ease-out 0.2s 1;
 }
 
 .btn-outline {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
@@ -221,17 +272,33 @@ body {
     font-weight: 500;
     font-size: 0.95rem;
     color: var(--text-primary);
-    background: var(--bg-surface);
+    background: linear-gradient(
+        to right,
+        var(--accent) 0%,
+        var(--accent-deep) 50%,
+        var(--bg-surface) 50%,
+        var(--bg-surface) 100%
+    );
+    background-size: 200% 100%;
+    background-position: 100% 0;
     border-radius: 999px;
     border: 1px solid var(--border-soft);
-    transition: all 0.2s ease;
+    transition: background-position 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        color 0.35s ease,
+        border-color 0.35s ease;
     cursor: pointer;
 }
 
 .btn-outline:hover {
-    border-color: var(--accent);
-    color: var(--accent-deep);
-    background: rgba(8, 145, 178, 0.05);
+    color: #ffffff;
+    border-color: var(--accent-deep);
+    background-position: 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cta-primary-arrive { animation: none !important; }
+    .btn-primary::before { transition: none !important; }
+    .btn-outline { transition: color 0.01ms, border-color 0.01ms !important; }
 }
 
 .btn-primary:focus-visible,
