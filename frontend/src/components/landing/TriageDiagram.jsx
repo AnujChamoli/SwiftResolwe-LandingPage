@@ -15,9 +15,9 @@ export const TriageDiagram = () => {
   ];
   const hub = { x: 280, y: 230 };
   const outputs = [
-    { x: 500, y: 110, label: "Negotiate", tier: "TIER 01" },
-    { x: 510, y: 230, label: "Mediate", tier: "TIER 02" },
-    { x: 500, y: 350, label: "Arbitrate", tier: "TIER 03" },
+    { x: 432, y: 110, label: "Negotiate", tier: "TIER 01" },
+    { x: 442, y: 230, label: "Mediate", tier: "TIER 02" },
+    { x: 432, y: 350, label: "Arbitrate", tier: "TIER 03" },
   ];
 
   const incoming = inputs.map((i) => `M ${i.x} ${i.y} C ${i.x + 110} ${i.y}, ${hub.x - 90} ${hub.y}, ${hub.x} ${hub.y}`);
