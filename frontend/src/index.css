@@ -460,7 +460,7 @@ a:focus-visible, button:focus-visible {
 
 .typewriter-target.is-typing::before {
     opacity: 1;
-    transform: translateX(calc(100% * 1px / 1px));
+    transform: translateX(100%);
     animation: caret-blink 0.9s steps(2, jump-none) infinite;
 }
 
